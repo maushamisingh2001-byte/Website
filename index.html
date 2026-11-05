@@ -4,353 +4,333 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lyzom - Apply where you actually fit</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Reset */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        :root {
+            --primary-teal: #186f65;
+            --primary-hover: #12544c;
+            --light-mint: #e8f5f3;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --bg-white: #ffffff;
+            --border-light: #e0e0e0;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Hidden Checkbox for CSS-only Dark Mode */
-        #theme-toggle { display: none; }
-
-        /* Theming Variables scoped to a wrapper */
-        .page-wrapper {
-            --bg-main: #ffffff;
-            --bg-alt: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #e2e8f0;
-            --brand-green: #1b5e55;
-            --brand-hover: #144b44;
-            --brand-light: #eaf2f1;
-            --danger: #dc2626;
-            
-            background-color: var(--bg-main);
+            font-family: var(--font-stack);
             color: var(--text-main);
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: var(--bg-white);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-
-        /* Dark Mode Override */
-        #theme-toggle:checked ~ .page-wrapper {
-            --bg-main: #0b1120;
-            --bg-alt: #111827;
-            --bg-card: #1f2937;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #374151;
-            --brand-green: #2dd4bf;
-            --brand-hover: #14b8a6;
-            --brand-light: rgba(45, 212, 191, 0.1);
-            --danger: #ef4444;
-        }
-
-        /* Utility */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-        a { text-decoration: none; color: inherit; }
-        
-        .btn {
-            display: inline-flex; justify-content: center; align-items: center;
-            padding: 12px 24px; font-size: 0.95rem; font-weight: 500;
-            border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
-        }
-        .btn-primary { background: var(--brand-green); color: #fff; border: 1px solid var(--brand-green); }
-        .btn-primary:hover { background: var(--brand-hover); }
-        .btn-secondary { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); }
-        .btn-secondary:hover { border-color: var(--text-muted); }
-        #theme-toggle:checked ~ .page-wrapper .btn-primary { color: #0b1120; }
 
         /* Navigation */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-color); }
-        
-        /* Logo Styling based on Image */
-        .logo-wrapper { display: flex; align-items: center; gap: 8px; font-size: 1.25rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.02em; }
-        .logo-icon { color: var(--brand-green); display: flex; align-items: center; }
-
-        .nav-links { display: flex; gap: 32px; font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
-        .nav-links a:hover { color: var(--text-main); }
-        .nav-actions { display: flex; gap: 16px; align-items: center; }
-        
-        /* Dark Mode Toggle Button */
-        .theme-label {
-            cursor: pointer; padding: 8px; border-radius: 50%;
-            background: var(--bg-alt); border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center; color: var(--text-muted);
-            transition: all 0.2s;
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: var(--bg-white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
         }
-        .theme-label:hover { color: var(--brand-green); border-color: var(--brand-green); }
-        .icon-sun, .icon-moon { display: none; }
-        /* Default to Light Mode (Show Moon icon for option to switch to dark) */
-        .icon-moon { display: block; }
-        /* When Dark Mode is active (Show Sun icon for option to switch to light) */
-        #theme-toggle:checked ~ .page-wrapper .icon-moon { display: none; }
-        #theme-toggle:checked ~ .page-wrapper .icon-sun { display: block; }
 
-        /* Hero Section (Reduced font sizes & spacing) */
-        .hero { padding: 60px 0; text-align: center; }
-        .hero h1 { font-size: 2.75rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; max-width: 800px; margin: 0 auto 20px; }
-        .hero p { font-size: 1.05rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 32px; }
-        .hero-btns { display: flex; gap: 16px; justify-content: center; }
-
-        /* Sections General */
-        .section { padding: 60px 0; border-bottom: 1px solid var(--border-color); }
-        .section-title { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 40px; text-align: center; }
-
-        /* Visual Steps Flow */
-        .workflow { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 900px; margin: 0 auto; }
-        .step-item {
-            flex: 1; text-align: center; padding: 24px; background: var(--bg-card);
-            border: 1px solid var(--border-color); border-radius: 12px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-main);
         }
-        .step-icon { 
-            width: 48px; height: 48px; background: var(--brand-light); color: var(--brand-green); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            margin: 0 auto 16px; 
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary-teal);
+            border-radius: 4px;
+            /* Replace this div with your EXACT 100% Lyzom SVG logo */
         }
-        .step-item h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .step-item p { font-size: 0.9rem; color: var(--text-muted); }
-        .step-arrow { color: var(--border-color); display: flex; align-items: center; justify-content: center; }
 
-        /* Trust / Visual "Never Do" Rules */
-        .trust-grid { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
-        .trust-badge {
-            display: flex; align-items: center; gap: 12px; padding: 16px 24px;
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 50px;
-            font-size: 0.95rem; font-weight: 500; color: var(--text-main);
+        .nav-links {
+            display: flex;
+            gap: 2rem;
         }
-        .trust-badge svg { color: var(--danger); flex-shrink: 0; }
 
-        /* Pricing (Compact) */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
-        .price-card { background: var(--bg-card); padding: 32px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
-        .price-card.featured { border: 2px solid var(--brand-green); position: relative; }
-        .save-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--brand-green); color: var(--bg-main); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-        .price-amount { font-size: 2.5rem; font-weight: 700; margin: 12px 0; color: var(--text-main); }
-        .price-amount span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
-        .price-list { margin: 24px 0; flex-grow: 1; }
-        .price-list li { list-style: none; margin-bottom: 12px; font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-        .price-list li::before { content: '✓'; color: var(--brand-green); font-weight: bold; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
 
-        /* FAQ (Compact) */
-        .faq-list { max-width: 700px; margin: 0 auto; }
-        details { border-bottom: 1px solid var(--border-color); }
-        summary { padding: 20px 0; font-size: 1rem; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: '+'; font-size: 1.25rem; color: var(--brand-green); }
-        details[open] summary::after { content: '-'; }
-        details p { padding-bottom: 20px; color: var(--text-muted); font-size: 0.95rem; }
+        .nav-links a:hover {
+            color: var(--primary-teal);
+        }
 
-        /* Footer */
-        footer { padding: 40px 0 24px; text-align: center; }
-        .footer-cta h2 { font-size: 2rem; margin-bottom: 24px; }
-        .footer-bottom { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); }
-        .footer-links { display: flex; gap: 24px; }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-        /* Responsive Flow */
-        @media (max-width: 768px) {
-            .workflow { flex-direction: column; }
-            .step-arrow { transform: rotate(90deg); margin: 8px 0; }
-            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-            .nav-links { display: none; }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-main);
+        }
+
+        .btn-primary {
+            background: var(--primary-teal);
+            color: var(--bg-white);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, rgba(232,245,243,0.5) 0%, rgba(255,255,255,1) 100%);
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-content p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 5%;
+            background: var(--bg-white);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .pricing-card.featured {
+            background: var(--light-mint);
+            border-color: var(--primary-teal);
+        }
+
+        .price-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            flex-grow: 1;
+        }
+
+        .price-features li {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .price-features li::before {
+            content: "✓";
+            color: var(--primary-teal);
+            font-weight: bold;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 4rem 5%;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hidden checkbox controls the entire page theme via pure CSS -->
-    <input type="checkbox" id="theme-toggle">
+    <nav>
+        <div class="logo">
+            <div class="logo-icon"></div> <!-- INJECT EXACT LYZOM SVG HERE -->
+            Lyzom
+        </div>
+        <div class="nav-links">
+            <a href="#">How it works</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+            <a href="#">Pricing</a>
+            <a href="#">Subscribe</a>
+        </div>
+        <div class="nav-actions">
+            <a href="#" class="btn btn-outline">Sign in</a>
+            <a href="#" class="btn btn-primary">Get started free</a>
+        </div>
+    </nav>
 
-    <div class="page-wrapper">
-        <header class="container">
-            <nav>
-                <div class="logo-wrapper">
-                    <!-- Lyzom Image Logo Replication[cite: 2] -->
-                    <div class="logo-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 2C4 0.89543 4.89543 0 6 0C7.10457 0 8 0.89543 8 2V16C8 17.1046 7.10457 18 6 18C4.89543 18 4 17.1046 4 16V2Z"/>
-                            <path d="M8 20C8 17.7909 9.79086 16 12 16H22C23.1046 16 24 16.8954 24 18C24 19.1046 23.1046 20 22 20H8Z"/>
-                        </svg>
-                    </div>
-                    Lyzom
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Stop applying blindly. Apply where you actually fit.</h1>
+            <p>Lyzom searches the popular job sites in one go, scores every job against your profile and shows what matches and what's missing. Then it writes a resume for that job from your own facts, so you send a stronger application every time.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">Find jobs that fit me</a>
+                <a href="#" class="btn btn-outline">See how it works</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div style="border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.25rem;">MERN Stack Developer</h3>
+                <p style="color: #666; font-size: 0.85rem;">Hybrid • Noida, UP</p>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                <div style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--primary-teal); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--primary-teal);">82</div>
+                <div>
+                    <span style="background: #e8f5f3; color: var(--primary-teal); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Excellent Match</span>
                 </div>
-                <div class="nav-links">
-                    <a href="#workflow">Workflow</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#faq">FAQ</a>
-                </div>
-                <div class="nav-actions">
-                    <!-- Theme Toggle Button -->
-                    <label for="theme-toggle" class="theme-label" title="Toggle Dark Mode">
-                        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    </label>
-                    <a href="#" style="font-weight: 500; font-size: 0.95rem;">Sign in</a>
-                    <a href="#" class="btn btn-primary">Get started</a>
-                </div>
-            </nav>
-        </header>
+            </div>
+            <p style="font-size: 0.9rem; color: #444; margin-bottom: 1.5rem;">Your profile is a strong match. You have experience with the core stack including React, Node.js and MongoDB.</p>
+            <button class="btn btn-primary" style="width: 100%;">Build ATS resume</button>
+        </div>
+    </section>
 
-        <main>
-            <!-- Hero -->
-            <section class="hero container">
-                <h1>Stop applying blindly.<br>Apply where you actually fit.</h1>
-                <p>Lyzom scans popular job sites, scores every role against your profile, and reveals your matches. Then, it crafts a precise resume using only your facts.</p>
-                <div class="hero-btns">
-                    <a href="#pricing" class="btn btn-primary">Find jobs that fit</a>
-                    <a href="#workflow" class="btn btn-secondary">See how it works</a>
-                </div>
-            </section>
-
-            <!-- Visual Workflow Steps -->
-            <section id="workflow" class="section container">
-                <h2 class="section-title">How it works</h2>
-                <div class="workflow">
-                    <div class="step-item">
-                        <div class="step-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                        </div>
-                        <h3>1. Provide profile</h3>
-                        <p>Upload your LinkedIn or old resume once.</p>
-                    </div>
-                    
-                    <div class="step-arrow">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        </div>
-                        <h3>2. Match jobs</h3>
-                        <p>We score roles to show exactly where you fit.</p>
-                    </div>
-
-                    <div class="step-arrow">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </div>
-
-                    <div class="step-item">
-                        <div class="step-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        </div>
-                        <h3>3. Export resume</h3>
-                        <p>Get an ATS-friendly PDF built from your facts.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Visual Trust Badges -->
-            <section class="section container" style="background: var(--bg-alt); border-radius: 16px; margin-top: 40px; margin-bottom: 40px;">
-                <h2 class="section-title" style="margin-bottom: 32px;">What we will never do</h2>
-                <div class="trust-grid">
-                    <div class="trust-badge">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        No fake facts
-                    </div>
-                    <div class="trust-badge">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        No sharing 'ATS scores'
-                    </div>
-                    <div class="trust-badge">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        No asking for passwords
-                    </div>
-                    <div class="trust-badge">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        No automatic charges
-                    </div>
-                </div>
-            </section>
-
-            <!-- Pricing -->
-            <section id="pricing" class="section container">
-                <h2 class="section-title">Simple pricing</h2>
-                <div class="pricing-grid">
-                    <!-- Free -->
-                    <div class="price-card">
-                        <h3>Free</h3>
-                        <div class="price-amount">₹0</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Refreshes monthly.</p>
-                        <ul class="price-list">
-                            <li>5 job searches a month</li>
-                            <li>3 resume builds a month</li>
-                            <li>Naukri, LinkedIn, Indeed</li>
-                        </ul>
-                        <a href="#" class="btn btn-secondary">Get started</a>
-                    </div>
-
-                    <!-- 3 Months -->
-                    <div class="price-card featured">
-                        <div class="save-tag">SAVE 25%</div>
-                        <h3>3 months</h3>
-                        <div class="price-amount">₹899 <span>/ quarter</span></div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Prepay. Never auto-renews.</p>
-                        <ul class="price-list">
-                            <li>20 searches a month</li>
-                            <li>50 resume builds a month</li>
-                            <li>Priority support</li>
-                        </ul>
-                        <a href="#" class="btn btn-primary">Buy 3 months</a>
-                    </div>
-
-                    <!-- 1 Month -->
-                    <div class="price-card">
-                        <h3>1 month</h3>
-                        <div class="price-amount">₹399 <span>/ month</span></div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Prepay. Never auto-renews.</p>
-                        <ul class="price-list">
-                            <li>20 searches a month</li>
-                            <li>50 resume builds a month</li>
-                            <li>Standard support</li>
-                        </ul>
-                        <a href="#" class="btn btn-secondary">Buy 1 month</a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- FAQ -->
-            <section id="faq" class="section container" style="border-bottom: none;">
-                <h2 class="section-title">Before you sign up</h2>
-                <div class="faq-list">
-                    <details>
-                        <summary>Is my LinkedIn or Naukri password safe?</summary>
-                        <p>Yes. The extension runs safely inside your Chrome browser where you are already logged in. We never ask for your passwords.</p>
-                    </details>
-                    <details>
-                        <summary>Will the resume pass an ATS?</summary>
-                        <p>Yes. By mapping your exact facts cleanly to the job requirements without complex layouts, the PDF is highly ATS-friendly.</p>
-                    </details>
-                    <details>
-                        <summary>What happens when my plan ends?</summary>
-                        <p>You revert to the free plan. We never charge you automatically. You only pay again if you choose to top up.</p>
-                    </details>
-                </div>
-            </section>
-        </main>
-
-        <footer class="container">
-            <div class="footer-cta">
-                <h2>Ready to find your fit?</h2>
-                <a href="#" class="btn btn-primary">Start for free</a>
+    <section class="pricing">
+        <div class="pricing-header">
+            <h2>Start free. Pay only when you need more.</h2>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="price-title">Free</div>
+                <div class="price-amount">₹0</div>
+                <ul class="price-features">
+                    <li>3 searches a month</li>
+                    <li>3 resume builds a month</li>
+                    <li>Naukri integration</li>
+                    <li>LinkedIn and Indeed</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Get started free</a>
             </div>
             
-            <div class="footer-bottom">
-                <div>© 2026 Lyzom. All rights reserved.</div>
-                <div class="footer-links">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                </div>
+            <div class="pricing-card">
+                <div class="price-title">1 month</div>
+                <div class="price-amount">₹399</div>
+                <ul class="price-features">
+                    <li>30 searches a month, up to 5 keywords each</li>
+                    <li>30 resume builds a month</li>
+                    <li>LinkedIn, Naukri and Indeed</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Buy 1 month</a>
             </div>
-        </footer>
-    </div>
+
+            <div class="pricing-card featured">
+                <div class="price-title">3 months</div>
+                <div class="price-amount">₹899</div>
+                <ul class="price-features">
+                    <li>30 searches a month, up to 5 keywords each</li>
+                    <li>30 resume builds a month</li>
+                    <li>LinkedIn, Naukri and Indeed</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Buy 3 months</a>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
