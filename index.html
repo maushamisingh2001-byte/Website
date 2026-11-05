@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyzom - Apply where you actually fit</title>
+    <style>
+        /* Base & Reset */
+        :root {
+            --primary-green: #1b5e55;
+            --primary-hover: #13463f;
+            --bg-light: #f7faf9;
+            --text-dark: #1a202c;
+            --text-muted: #4a5568;
+            --border-light: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--text-dark); line-height: 1.6; background-color: #ffffff; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* Layout & Typography */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.02em; }
+        h2 { font-size: 2rem; margin-bottom: 32px; letter-spacing: -0.01em; }
+        h3 { font-size: 1.25rem; margin-bottom: 12px; }
+        p { color: var(--text-muted); margin-bottom: 16px; }
+        
+        /* Buttons */
+        .btn { display: inline-block; padding: 12px 24px; border-radius: 8px; font-weight: 500; cursor: pointer; text-align: center; border: 1px solid transparent; }
+        .btn-primary { background-color: var(--primary-green); color: white; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background-color: white; border-color: var(--border-light); color: var(--text-dark); }
+        .btn-secondary:hover { background-color: var(--bg-light); }
+
+        /* Navbar */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-light); }
+        .nav-links { display: flex; gap: 24px; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        .nav-actions { display: flex; gap: 16px; align-items: center; }
+
+        /* Hero Section */
+        .hero { padding: 80px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; background: linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%); }
+        .hero-actions { display: flex; gap: 16px; margin-top: 32px; }
+        
+        /* Steps Section */
+        .steps { padding: 80px 0; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+        .step-card { padding: 24px; border: 1px solid var(--border-light); border-radius: 12px; background: white; }
+        
+        /* Trust Section */
+        .trust { padding: 80px 0; background-color: var(--bg-light); }
+        .trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 800px; margin: 0 auto; }
+        .trust-item { display: flex; gap: 16px; align-items: flex-start; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+        /* Pricing Section */
+        .pricing { padding: 80px 0; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+        .price-card { padding: 32px; border: 1px solid var(--border-light); border-radius: 12px; background: white; display: flex; flex-direction: column; }
+        .price-card.featured { background-color: var(--bg-light); border-color: var(--primary-green); }
+        .price-amount { font-size: 2.5rem; font-weight: bold; margin: 16px 0; color: var(--text-dark); }
+        .price-features { margin-top: 24px; flex-grow: 1; }
+        .price-features li { list-style: none; margin-bottom: 12px; font-size: 0.95rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+        .price-features li::before { content: "✓"; color: var(--primary-green); font-weight: bold; }
+
+        /* FAQ Section */
+        .faq { padding: 80px 0; max-width: 800px; margin: 0 auto; }
+        details { border-bottom: 1px solid var(--border-light); padding: 16px 0; }
+        summary { font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; font-size: 1.1rem; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "+"; color: var(--primary-green); font-size: 1.2rem; }
+        details[open] summary::after { content: "−"; }
+        details p { margin-top: 16px; padding-right: 24px; }
+
+        /* Footer */
+        footer { padding: 60px 0; border-top: 1px solid var(--border-light); background: var(--bg-light); }
+        .footer-cta { text-align: center; margin-bottom: 48px; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="container">
+        <nav>
+            <div style="font-weight: bold; font-size: 1.5rem; color: var(--primary-green);">Lyzom</div>
+            <div class="nav-links">
+                <a href="#how-it-works">How it works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" style="font-weight: 500;">Sign in</a>
+                <a href="#" class="btn btn-primary">Get started free</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div>
+                <h1>Stop applying blindly. Apply where you actually fit.[cite: 1]</h1>
+                <p>Lyzom searches the popular job sites in one go, scores every job against your profile, and shows what matches and what is missing.[cite: 1] It then writes a resume for that specific job using your own facts, ensuring you send a stronger application every time.[cite: 1]</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary">Find jobs that fit me[cite: 1]</a>
+                    <a href="#how-it-works" class="btn btn-secondary">See how it works[cite: 1]</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section id="how-it-works" class="steps container">
+        <h2>Three steps from search to an application that fits.[cite: 1]</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <h3>1. Tell us about you, once.[cite: 1]</h3>
+                <p>Upload your LinkedIn profile, old resumes, or raw notes. We structure your data securely.[cite: 1]</p>
+            </div>
+            <div class="step-card">
+                <h3>2. See where you fit, and why.[cite: 1]</h3>
+                <p>We score relevant jobs based on your skills, highlighting exactly where you match and where you fall short before you waste time applying.[cite: 1]</p>
+            </div>
+            <div class="step-card">
+                <h3>3. Apply with a resume made for it.[cite: 1]</h3>
+                <p>Generate a tailored PDF resume written entirely from your own facts, formatted perfectly as a robust ATS draft.[cite: 1]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust / Values Section -->
+    <section class="trust">
+        <div class="container text-center">
+            <h2 style="text-align: center;">What we will never do[cite: 1]</h2>
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div>
+                        <h4 style="color: #c53030;">Never invent facts[cite: 1]</h4>
+                        <p style="font-size: 0.9rem; margin-top: 4px;">Only what you give us.[cite: 1]</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div>
+                        <h4 style="color: #c53030;">Never share an 'ATS score'[cite: 1]</h4>
+                        <p style="font-size: 0.9rem; margin-top: 4px;">A match for one job.[cite: 1]</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div>
+                        <h4 style="color: #c53030;">Never ask for passwords[cite: 1]</h4>
+                        <p style="font-size: 0.9rem; margin-top: 4px;">Your logins stay in Chrome.[cite: 1]</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div>
+                        <h4 style="color: #c53030;">Never charge automatically[cite: 1]</h4>
+                        <p style="font-size: 0.9rem; margin-top: 4px;">Prepay, never renews.[cite: 1]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing container">
+        <h2>Start free. Pay only when you need more.[cite: 1]</h2>
+        <div class="pricing-grid">
+            <!-- Free Tier -->
+            <div class="price-card">
+                <h3>Free[cite: 1]</h3>
+                <div class="price-amount">₹0[cite: 1]</div>
+                <p style="font-size: 0.9rem;">Refresh the limit each month.[cite: 1]</p>
+                <ul class="price-features">
+                    <li>5 searches a month[cite: 1]</li>
+                    <li>3 resume builds a month[cite: 1]</li>
+                    <li>Naukri integration[cite: 1]</li>
+                    <li>LinkedIn and Indeed[cite: 1]</li>
+                </ul>
+                <a href="#" class="btn btn-secondary" style="width: 100%; margin-top: 24px;">Get started free[cite: 1]</a>
+            </div>
+
+            <!-- 1 Month Tier -->
+            <div class="price-card">
+                <h3>1 month[cite: 1]</h3>
+                <div class="price-amount">₹399[cite: 1]</div>
+                <p style="font-size: 0.9rem;">Prepay. Never renews by itself.[cite: 1]</p>
+                <ul class="price-features">
+                    <li>20 searches a month, up to 5 keywords each[cite: 1]</li>
+                    <li>50 resume builds a month[cite: 1]</li>
+                    <li>LinkedIn, Naukri, and Indeed[cite: 1]</li>
+                </ul>
+                <a href="#" class="btn btn-secondary" style="width: 100%; margin-top: 24px;">Buy 1 month[cite: 1]</a>
+            </div>
+
+            <!-- 3 Months Tier -->
+            <div class="price-card featured">
+                <div style="color: var(--primary-green); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Save 25%[cite: 1]</div>
+                <h3>3 months[cite: 1]</h3>
+                <div class="price-amount">₹899 <span style="font-size: 1rem; font-weight: normal; color: var(--text-muted);">₹299 a month[cite: 1]</span></div>
+                <p style="font-size: 0.9rem;">Prepay. Never renews by itself.[cite: 1]</p>
+                <ul class="price-features">
+                    <li>20 searches a month, up to 5 keywords each[cite: 1]</li>
+                    <li>50 resume builds a month[cite: 1]</li>
+                    <li>LinkedIn, Naukri, and Indeed[cite: 1]</li>
+                </ul>
+                <a href="#" class="btn btn-primary" style="width: 100%; margin-top: 24px;">Buy 3 months[cite: 1]</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq container">
+        <h2>Before you sign up[cite: 1]</h2>
+        <p>Got a minute? Read this first.[cite: 1]</p>
+        
+        <div style="margin-top: 32px;">
+            <details>
+                <summary>Is my LinkedIn or Naukri password safe?[cite: 1]</summary>
+                <p>Yes. The extension runs inside your Chrome browser where you are already logged in. Your credentials never leave your browser, and we never ask for them.[cite: 1]</p>
+            </details>
+            <details>
+                <summary>Will the resume I build pass an ATS?[cite: 1]</summary>
+                <p>Yes. By avoiding complex formatting and using your exact facts mapped cleanly to the job requirements, the exported PDF is highly ATS-friendly.[cite: 1]</p>
+            </details>
+            <details>
+                <summary>What does the match score mean?[cite: 1]</summary>
+                <p>It indicates how well your profile aligns with the required skills and experience for that specific job posting, helping you focus your time on high-probability applications.[cite: 1]</p>
+            </details>
+            <details>
+                <summary>Do I need a laptop?[cite: 1]</summary>
+                <p>For searching and applying, the extension needs a desktop Chrome or Edge browser. However, you can check results, match scores, and download resumes on your phone.[cite: 1]</p>
+            </details>
+            <details>
+                <summary>What happens when my plan ends?[cite: 1]</summary>
+                <p>You revert to the free plan. Nothing changes automatically, and your data stays secure. You only pay when you choose to top up.[cite: 1]</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-cta">
+                <h2>Spend your time on jobs that fit you.[cite: 1]</h2>
+                <p>Sign up with Google or Microsoft. No credit card required.[cite: 1]</p>
+                <a href="#" class="btn btn-primary" style="margin-top: 16px;">Get started free[cite: 1]</a>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); border-top: 1px solid var(--border-light); padding-top: 24px;">
+                <div>© 2026 Lyzom. All rights reserved.</div>
+                <div style="display: flex; gap: 16px;">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
